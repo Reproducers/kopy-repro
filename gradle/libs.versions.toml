@@ -1,0 +1,7 @@
+[versions]
+kopy = "0.2.1+2.0.20-SNAPSHOT"
+kotlin = "2.0.20"
+
+[plugins]
+kopy = { id = "com.javiersc.kotlin.kopy", version.ref = "kopy" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
