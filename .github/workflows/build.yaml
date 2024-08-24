@@ -1,0 +1,36 @@
+name: build
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  GRADLE_ENCRYPTION_KEY: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+  GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB_ACTION }}
+  GH_TOKEN: ${{ secrets.TOKEN_GITHUB_ACTION }}
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-latest' ]
+
+    steps:
+      - name: Checkout
+        uses: JavierSegoviaCordoba/reusable-workflows/actions/checkout@main
+
+      - name: Set up Java
+        uses: JavierSegoviaCordoba/reusable-workflows/actions/setup-java@main
+
+      - name: Set up Gradle
+        uses: JavierSegoviaCordoba/reusable-workflows/actions/setup-gradle@main
+
+      - name: Build
+        run: ./gradlew run
